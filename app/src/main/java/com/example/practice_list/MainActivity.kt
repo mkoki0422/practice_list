@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,5 +19,9 @@ class MainActivity : AppCompatActivity() {
         val adapter=ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,array)
 
         Listview.adapter=adapter
+
+        Listview.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(applicationContext,array[position],Toast.LENGTH_LONG).show()
+        }
     }
 }
