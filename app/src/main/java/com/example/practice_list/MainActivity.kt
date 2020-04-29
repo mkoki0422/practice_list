@@ -5,23 +5,36 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() ,AddAnimalListner{
+
+
+    lateinit var mAnimalList:ArrayList<Animal>
+    lateinit var mAdapter:CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
 
-        val array= arrayOf("a1","a2","a3","a4")
-        val Listview= findViewById<ListView>(R.id.list_view)
+        val dog=Animal("犬",4)
+        val cat=Animal("猫",4)
+        val pig=Animal("ぶた",4)
+        val dog0=Animal("太郎",4)
+        val dog1=Animal("山田",4)
+        val dog2=Animal("石口",4)
+        val dog3=Animal("加藤",4)
+        mAnimalList= arrayListOf(dog,cat,pig,dog0,dog1,dog2,dog3)
 
-        val adapter=ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,array)
+        recycler_view.layoutManager=LinearLayoutManager(this)//一列で並べるため
+        mAdapter=CustomAdapter(mAnimalList,this)
+        recycler_view.adapter=mAdapter
+    }
 
-        Listview.adapter=adapter
-
-        Listview.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(applicationContext,array[position],Toast.LENGTH_LONG).show()
-        }
+    override fun button_tapped(animal: Animal) {
+        mAnimalList.add(animal)
+        mAdapter.notifyDataSetChanged()
     }
 }
